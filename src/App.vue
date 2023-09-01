@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <time-line/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TimeLine from './components/TimeLine.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TimeLine
   }
 }
 </script>
@@ -26,3 +25,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
