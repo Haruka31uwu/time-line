@@ -1,11 +1,11 @@
 <template>
     <div >
         <div class="timeline" >
-            {{ item }}
             <time-line-item
-            v-for="(item,index) in timelineItems.stages" :key="index"
+             v-for="(item,index) in timelineItems.stages" :key="index"
             :stage="item"
             :is-end="index==timelineItems.stages.length-1"
+            :index="index+1"
             />  
         </div>
      
@@ -136,11 +136,11 @@ export default {
     width: 90%;
     height:100%;
     min-height: 1200px;
-    margin: 0 auto;
+    margin:0 auto;
     display: flex;
     flex-direction: column;
+    padding:2em 0;
     background: #F2F3F4;
-    overflow-y: auto;
 }
 </style>
 
