@@ -1,43 +1,50 @@
 <template>
   <div class="timelineitem">
+    <div style="position: relative;">
+      <div  
+      :class="
+      index % 2 == 0
+        ? 'timelineinfo-container-right'
+        : 'timelineinfo-container-left'
+    "
+  >
     <div
+      :id="`infoconnector-${index}`"
+      :style="setItemsColor(index,true)"
       :class="
         index % 2 == 0
-          ? 'timelineinfo-container-right'
-          : 'timelineinfo-container-left'
+          ? 'timelineinfoconnector-right timelineinfoconnector '
+          : 'timelineinfoconnector-left timelineinfoconnector '
       "
-    >
-      <div
-        :style="setItemsColor(index,true)"
-        :class="
-          index % 2 == 0
-            ? 'timelineinfoconnector-right timelineinfoconnector'
-            : 'timelineinfoconnector-left timelineinfoconnector'
-        "
-      ></div>
-      <div class="timelineinfo">
-        Quaerat obcaecati voluptatibus architecto iusto suscipit porro facilis
-        magnam ut iste mollitia placeat earum quam quis dolorem ducimus eveniet,
-        nulla quo similique eligendi, sint, consectetur asperiores! Debitis
-        numquam reprehenderit aliquid!
-      </div>
+    ></div>
+    <div class="timelineinfo opacity-0" :id="`timelineinfo-${index}`">
+      Quaerat obcaecati voluptatibus architecto iusto suscipit porro facilis
+      magnam ut iste mollitia placeat earum quam quis dolorem ducimus eveniet,
+      nulla quo similique eligendi, sint, consectetur asperiores! Debitis
+      numquam reprehenderit aliquid!
     </div>
-    <div :id="`${index}-event`" class="timelineevent">
-      <div class="circle"  @click="openItemInformation(index)" @mouseenter="hoverItem(index,true)" @mouseleave="hoverItem(index,false)">
-          <span class="event-name" :id="`event-name${index}`">{{ stage.name }}</span>
-        <svg class="svg">
-          <circle :id='`ci-border${index}`' :style="setItemsColor(index)" class="circle-border" cx="100" cy="100" r="75">
-          </circle>
-        </svg>
-      </div>
+  </div>
+  <div :id="`${index}-event`" class="timelineevent" >
+    <div class="circle"  @click="openItemInformation(index)" @mouseenter="hoverItem(index,true)" @mouseleave="hoverItem(index,false)">
+        <span class="event-name" :id="`event-name${index}`">{{ stage.name }}</span>
+      <svg class="svg">
+        <circle :id='`ci-border${index}`' :style="setItemsColor(index)" class="circle-border" cx="100" cy="100" r="75">
+        </circle>
+      </svg>
     </div>
-    <div  v-if="!isEnd" >
+  <div :id="`cc-${index}`" class="candidates-container opacity-0" >
+    <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate">
+      <span>{{candidate.name}}</span>
+    </div>
+  </div>
+  </div>
+  <div  v-if="!isEnd" >
     <div class="line" >
         <svg class="svg-line">
         <line :id='`li-border${index}`' :style="setItemsColor(index)" x1="0" y1="30" x2="0" y2="100%" stroke="black" stroke-width="1" />
         </svg>
     </div>
-    </div>
+  </div></div>
   </div>
 </template>
 <script>
@@ -95,19 +102,87 @@ export default {
     },
     openItemInformation(index){
       const itemCircle=document.querySelector(`#ci-border${index}`);
-      itemCircle.classList.add('circle-border-clicked')
+      const timelineInfoConnector=document.querySelector(`#infoconnector-${index}`);
+
+      if(itemCircle.classList.contains('circle-border-clicked')){
+        itemCircle.classList.remove('circle-border-clicked')
+      }else{
+        itemCircle.classList.add('circle-border-clicked')
+      }
+      const candidatesContainer=document.querySelector(`#cc-${index}`);
+      // const timelineInfo=document.querySelector(`#timelineinfo-${index}`);
+      if(index%2!=0){
+        candidatesContainer.classList.add('candidate-container-rigth');
+        candidatesContainer.classList.remove('candidate-container-left');
+      }else
+      {
+        candidatesContainer.classList.add('candidate-container-left');
+        candidatesContainer.classList.remove('candidate-container-right');
+      }
+      if(candidatesContainer.classList.contains('opacity-1')){
+        candidatesContainer.classList.remove('opacity-1');
+        candidatesContainer.classList.add('opacity-0');
+        timelineInfoConnector.classList.remove('opacity-0');
+        timelineInfoConnector.classList.add('opacity-1');
+        const timeInfo=document.querySelector(`#timelineinfo-${index}`);
+        console.log('owo')
+       
+        setTimeout(()=>{
+          timeInfo.classList.remove('opacity-0');
+          timeInfo.classList.add('opacity-1');
+        },100)
+        setTimeout(()=>{
+                  timeInfo.animate([
+              {
+                transform: "translateY(100%)"
+              },
+              {
+                transform: "translateY(0%)"
+              }
+          ], {
+              duration: 500,
+              fill: 'forwards',
+            });
+        }
+        ,100)
+      }else{
+        candidatesContainer.classList.remove('opacity-0');
+        candidatesContainer.classList.add('opacity-1');
+        timelineInfoConnector.classList.remove('opacity-1');
+        timelineInfoConnector.classList.add('opacity-0');
+        const timeInfo=document.querySelector(`#timelineinfo-${index}`);
+        
+        setTimeout(()=>{
+          timeInfo.classList.remove('opacity-1');
+          timeInfo.classList.add('opacity-0');
+        },600)
+        setTimeout(()=>{
+                  timeInfo.animate([
+              {
+                transform: "translateY(0%)"
+              },
+              {
+                transform: "translateY(100%)"
+              }
+          ], {
+              duration: 500,
+              fill: 'forwards',
+            });
+        }
+        ,100)       
+      }
+     
+      
     },
     hoverItem(index,isHover){
       const itemCircle=document.querySelector(`#ci-border${index}`);
       const eventName=document.querySelector(`#event-name${index}`);
-      console.log(itemCircle)
       if(isHover){
         itemCircle.setAttribute('style',`stroke:${this.itemColorsDark[index]}!important`)
         eventName.setAttribute('style','font-weight:bold');
       }else{
         itemCircle.setAttribute('style',`stroke:${this.itemColors[index]}!important`)
         eventName.setAttribute('style','font-weight:400');
-
       }
     }
   },
@@ -133,6 +208,25 @@ export default {
             
             });
         }, 1500);
+        const timeInfo=document.querySelectorAll('.timelineinfo');
+        setTimeout(()=>{
+          timeInfo.forEach((info)=>{
+            info.classList.remove('opacity-0');
+            info.classList.add('opacity-1');
+            info.animate([
+              {   
+                transform: "translateY(100%)"
+              },
+              {
+                transform: "translateY(0%)"
+              }
+          ], {
+              duration: 1000,
+              fill: 'forwards',
+            });
+          })
+        }
+        ,2000)
     },
 };
 </script>
@@ -144,6 +238,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  position:relative;
 }
 .timelineitem {
   display: flex;
@@ -154,13 +249,12 @@ export default {
 .timelineconnector {
   width: 1px;
   height: 7em;
-  border-right: 1em solid black;
 }
 .timelineinfo-container-right {
   display: flex;
   flex-direction: row-reverse;
-  position: fixed;
-  left: 28em;
+  position: absolute;
+  left: -32em;
   width: 30em;
   word-break: break-all;
  
@@ -182,12 +276,38 @@ export default {
   margin-right: 1em;
   margin-top: 8%;
   opacity: 0;
-
-
 }
+
 .timelineinfo {
   width: 40%;
 }
+@media (max-width: 1580px) {
+  .timelineinfoconnector-right {
+    width: 40%;
+  }
+  .timelineinfoconnector-left {
+    width: 40%;
+  
+}
+}
+@media (max-width: 1280px) {
+  .timelineinfoconnector-right {
+    width: 20%;
+  }
+  .timelineinfoconnector-left {
+    width: 20%;
+  }
+}
+@media (max-width: 780px) {
+  .timelineinfoconnector-right {
+    width: 0;
+  }
+  .timelineinfoconnector-left {
+    width: 0;
+  
+}
+}
+
 @keyframes appear {
   0% {
     opacity: 0;
@@ -208,8 +328,8 @@ export default {
 .timelineinfo-container-left {
   display: flex;
   flex-direction: row;
-  position: fixed;
-  right: 28em;
+  position: absolute;
+  right: -32em;
   width: 30em;
   word-break: break-all;
 }.svg {
@@ -290,5 +410,47 @@ export default {
     stroke-dasharray: 120.2, 120.2;
   }
   
-  }
+}
+.candidates-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: white;
+  border-radius: 1em;
+  box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+ 
+}.candidate-container-rigth{
+ 
+  top: 0;
+  left:15em;
+}.candidate-container-left{
+
+  top:0;
+  right: 15em;
+}
+.candidate{
+  padding: 0.8em 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight:400;
+  cursor:pointer;
+  width: 100%;
+  word-break: break-all;
+}.candidate:hover{
+  font-weight: bold;
+  background: #F2F3F4;
+
+}.opacity-1{
+  opacity: 1!important;
+}.opacity-0{
+  opacity: 0!important;
+}
+
 </style>    

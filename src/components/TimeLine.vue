@@ -1,22 +1,39 @@
 <template>
-    <div >
-        <div class="timeline" >
+    <div style="position: relative;">
+          <div class="timeline" >
+            <div class="timeline-options">  
+              <div class="timeline-search">
+              <input class="timeline-search-input" placeholder="Search Candidate"/>
+              
+              </div>
+              <div class="timeline-styles">
+                <img src="../assets/paint.svg" alt="logo" width="32" height="32"/>
+              </div>
+              
+            </div>
+            <div class="timeline-styles info-icon">
+                <img src="../assets/info.svg" alt="logo" width="32" height="32"/>
+              </div> 
             <time-line-item
              v-for="(item,index) in timelineItems.stages" :key="index"
             :stage="item"
             :is-end="index==timelineItems.stages.length-1"
             :index="index+1"
-            />  
+            />
+
         </div>
+        <modal-muf />
      
     </div>
 </template>
 <script>
 import TimeLineItem from './TimeLineItem.vue'
+import ModalMuf from './ModalMuf.vue'
 
 export default {
     components:{
-        TimeLineItem
+        TimeLineItem,
+        ModalMuf
     },
     data(){
         return {
@@ -133,14 +150,64 @@ export default {
 </script>
 <style scoped>
 .timeline{
-    width: 90%;
+    width: 100%;
     height:100%;
-    min-height: 1200px;
+    max-height: 1000px;
     margin:0 auto;
     display: flex;
     flex-direction: column;
-    padding:2em 0;
+    padding:3em 0;
     background: #F2F3F4;
+    overflow-y: auto;
+    position: relative;
+}.timeline-search{
+    width: 15em;
+    min-width: 2em;
+}.timeline-search-input{
+  display: inline;
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+-webkit-box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+-moz-box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+}.timeline-search-input:hover{
+  font-weight: bold;
+  border:3px solid #000;
+  
+}.timeline-styles{
+  background: white;
+  padding: 0 0.2em;
+  border-radius: 0.5em;
+  width: auto;
+  height: auto;
+  margin-left: 2em;
+  margin-top: 0.3em;
+  box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+-webkit-box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+-moz-box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+cursor: pointer;
+  
+}.timeline-styles:hover{
+  background: #F2F3F4;
+
+}
+.timeline-options{
+  position: fixed;
+  top:5em;
+  left: 7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width:auto;
+  z-index: 2;
+
+}.info-icon{
+  position: fixed;
+  right: 7em;
+  top:5em;
 }
 </style>
 
