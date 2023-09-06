@@ -3,17 +3,23 @@
           <div class="timeline" >
             <div class="timeline-options">  
               <div class="timeline-search">
-              <input class="timeline-search-input" placeholder="Search Candidate"/>
-              
-              </div>
+              <input class="timeline-search-input" placeholder="Search Candidate" v-model="inputText"/>
               <div class="timeline-styles">
                 <img src="../assets/paint.svg" alt="logo" width="32" height="32"/>
               </div>
+              <div class="filtered-options">
+                <div class="filtered-option" v-for="(option,index) in filteredOptions" :key="index" @click="autocompleteName">
+                  {{option.name}}
+                </div>
+              </div>
               
-            </div>
-            <div class="timeline-styles info-icon" @click="openInfoMuf">
+              </div>
+             
+              <div class="timeline-styles info-icon" @click="openInfoMuf">
                 <img src="../assets/info.svg" alt="logo" width="32" height="32"/>
               </div> 
+            </div>
+            
             <time-line-item
              v-for="(item,index) in timelineItems.stages" :key="index"
             :stage="item"
@@ -144,16 +150,59 @@ export default {
                 ],
                 
             },
-            showInfoMuf:false
+            showInfoMuf:false,
+            suggestOptions:[{
+              name:'Francis Torres',
+              id:1
+            },
+            {
+              name:'Abraham Flores',
+              id:2
+            },
+            {
+              name:'Jairo Espinoza',
+              id:3
+            },
+            {
+              name:'Bill Morales',
+              id:4
+            }
+          ],
+          inputText:'',
+          filteredOptions:[]
     }
-},methods: {
+},
+methods: {
       openInfoMuf(){
         this.showInfoMuf=true
+        const timeline=document.querySelector('.timeline')
+        timeline.style.filter="blur(5px)"
+        timeline.setAttribute("aria-hidden", "true");
+        timeline.style.pointerEvents="none"
       },
       closeInfoMuf(){
         this.showInfoMuf=false
+        const timeline=document.querySelector('.timeline')
+        timeline.style.filter="blur(0px)"
+        timeline.setAttribute("aria-hidden", "false");
+        timeline.style.pointerEvents="auto"
+      },
+      autocompleteName(e){
+        this.inputText=e.target.textContent
+        console.log(e.target.value)
       }
     },
+watch:{
+  inputText(oldValue){
+    if(oldValue.length>0){
+      this.filteredOptions=this.suggestOptions.filter((option)=>{
+        return option.name.toLowerCase().includes(oldValue.toLowerCase())
+      })
+    }else{
+      this.filteredOptions=[]
+    } 
+}
+}
 }
 </script>
 <style scoped>
@@ -171,9 +220,12 @@ export default {
 }.timeline-search{
     width: 15em;
     min-width: 2em;
+    position: relative;
+    display: flex;
 }.timeline-search-input{
   display: inline;
   width: 100%;
+  min-width: 20em;
   padding: 0.5em;
   border-radius: 0.5em;
   font-family: 'Courier New', Courier, monospace;
@@ -188,6 +240,7 @@ export default {
   background: white;
   padding: 0 0.2em;
   border-radius: 0.5em;
+  display: inline;
   width: auto;
   height: auto;
   margin-left: 2em;
@@ -202,20 +255,60 @@ cursor: pointer;
 
 }
 .timeline-options{
-  position: fixed;
-  top:5em;
-  left: 7em;
+  position: sticky;
+  top:0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width:auto;
+  width:90%;
+  margin:0 auto;
   z-index: 2;
 
 }.info-icon{
-  position: fixed;
-  right: 7em;
-  top:5em;
+  position: sticky;
+  width: 2em;
+  right: vw;
+  top:0;
+}.filtered-options{
+  background: white;
+  width: 100%;
+  height: auto;
+  border-radius: 1em;
+  position:absolute;
+  margin-top: 3em;
+  box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(179,179,179,0.75);
+}.filtered-option{
+  border: 1px solid #000;
+  padding: 2px 0;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}.filtered-option:hover{
+  background: #F2F3F4;
+  font-weight: bold;
+  animation: 0.5s ease-in-out 0s 1 normal none running bounce;
+}
+@keyframes bounce{
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+.filtered-option:last-child{
+  border-radius: 0.5em;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}.filtered-option:first-child{
+  border-radius: 0.5em;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 </style>
 

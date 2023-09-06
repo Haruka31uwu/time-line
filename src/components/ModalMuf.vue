@@ -159,7 +159,7 @@ export default{
     -moz-box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
     border-radius: 1em;
     overflow-y: auto;
-overflow-x: hidden;
+    overflow-x: auto;
 }.modal-customized::-webkit-scrollbar{
     background:#D5DBDB;
     border-radius: 1em;
