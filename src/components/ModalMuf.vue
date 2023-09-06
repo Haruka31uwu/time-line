@@ -1,6 +1,7 @@
 <template>
     <div class="modal-customized">
-        <div class="modal-customized-header">Modal Muf</div>
+        <div class="modal-customized-header">Modal Muf <span class="close-modal" @click="close()">x</span></div>
+        
         <div class="modal-customized-body">
             <img src="../assets/arrow.png" v-if="page!=1" class="arrow-button prev-button" width="50" height="50" alt="arrow-left" @click="prevPage()" style="transform: rotate(180deg);" />
             <img src="../assets/arrow.png"  v-if="page!=3" class="arrow-button next-button" width="50" height="50" alt="arrow-right" @click="nextPage()" />
@@ -32,7 +33,54 @@
                             <div class="autonomy-info">
                                 <span class="section-title">Job Autonomy</span>
                                 <h2 class="section-value">Baja</h2>
+                                <span class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis adipisci, aliquam nemo nam tenetur provident odio minus delectus. Quas nisi assumenda inventore. Quae neque aspernatur officia voluptates quisquam repudiandae magni?</span>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="page-2-section">
+                        <div class="job-autonomy">
+                            <img src="../assets/functions.png" alt="autonomy" width="500" height="400"/>
+                            <div class="autonomy-info">
+                                <span class="section-title">Functions</span>
+                                <h2 class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, enim?</h2>
                                 <span class="section-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum fuga veritatis soluta voluptatibus maiores voluptatum, voluptas natus nesciunt quasi? Libero.</span>
+                               <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                                <br>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>    
+                            </div>
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="page-3 page">
+                <div class="modal-customized-body-header"></div>
+                <div class="page-2-body">
+                    <section class="page-2-section">
+                        <div class="job-autonomy">
+                          
+                            <div class="competitions-info">
+                                <span class="section-title">Perfil</span>
+                                <h2 class="section-value">Habilidades</h2>
+                                <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                                <br>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>
+                            </div>
+                            <img src="../assets/abilities.png" alt="abilities" width="400" height="300"/>
+                        </div>
+                        
+                    </section>
+                    <section class="page-3-section">
+                        <div class="job-autonomy">
+                            <img src="../assets/requirements.png" alt="requirements" width="500" height="400"/>
+                            <div class="autonomy-info">
+                                <span class="section-title">Job Requirements</span>
+                                <h2 class="section-value">Job Requirements</h2>
+                              
+                                <span class="section-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum fuga veritatis soluta voluptatibus maiores voluptatum, voluptas natus nesciunt quasi? Libero.</span>
+                               <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                                <br>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>    
                             </div>
                         </div>
                     </section>
@@ -46,7 +94,7 @@
 export default{
     data(){
         return{
-            page:2
+            page:1
         }
     },
     methods:{
@@ -55,6 +103,14 @@ export default{
             actualPage.style.display="none";
             const nextPage=document.querySelector(`.page-${this.page+1}`);
             nextPage.style.display="flex";
+            nextPage.animate([
+                {transform: 'translateX(100%)'},
+                {transform: 'translateX(0%)'}
+            ],{
+                duration: 500,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            });
             this.page++;
         },
         prevPage(){
@@ -62,7 +118,18 @@ export default{
             actualPage.style.display="none";
             const prevPage=document.querySelector(`.page-${this.page-1}`);
             prevPage.style.display="flex";
+            prevPage.animate([
+                {transform: 'translateX(-100%)'},
+                {transform: 'translateX(0%)'}
+            ],{
+                duration: 500,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            });
             this.page--;
+        },
+        close(){
+            this.$emit('close');
         }
     },
     mounted() {
@@ -122,9 +189,10 @@ overflow-x: hidden;
     text-align: left;
     font-size: 1.8em;
     position: sticky;
-    
     top: 0;
     z-index: 2;
+    display: flex;
+    justify-content: space-between;
 }.modal-customized-body{
     display: block;
     height: auto;
@@ -134,8 +202,8 @@ overflow-x: hidden;
     position: relative;
     
 }.modal-customized-body-header{    
-    width: 80%;
-    margin: 0 10em 0 10px;
+    width: 70%;
+    margin: 0 25em 0 10px;
     height:2.5em;
     background: #3498DB;
 }
@@ -192,7 +260,11 @@ padding-bottom: 5em;
     width: 100%;
     position:relative;
     transition: all 0.5s ease-in-out;
-}.page-1{
+
+}
+
+
+.page-1{
     display: none;
 }.page-2{
     display: none;
@@ -219,10 +291,71 @@ padding-bottom: 5em;
     font-size: 3em;
     padding:0;
     margin:0.1em 0 0.2em 0;
+
 }.section-description{
     font-family: 'Courier New', Courier, monospace;
     font-weight:lighter;
     color:#979A9A;
-    word-spacing: 0.4em;
+    word-spacing: 0.2em;
+    text-align: justify;
+}    
+.functions{
+    text-align: justify;
+    display: flex;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    justify-content: flex-start;
+    width: 100%;
+    position: relative;
+    margin: 0;
+}.functions-reverse{
+    text-align: justify;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items:center;
+    justify-content: flex-end;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+    margin: 0;
+
+}
+.function-dot {
+    border-radius: 50%;
+    background-color: #3498DB;
+    height:1.8em;
+    width:3em;
+    font-weight: bold;
+    margin: 0 0.5em;
+}.competitions-info{
+    width: 40%;
+    word-wrap: break-word;
+    margin-right: 5em;
+}.page-3{
+    display: none;
+}.close-modal{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+    color: black;
+    background: #F2F3F4;
+    padding: 0.8em 0.5em;
+    border-radius: 0.2em;
+
+}.close-modal:hover{
+    background: #ECF0F1;
+}.modal-customized-body::-webkit-scrollbar{
+    background:#D5DBDB;
+    border-radius: 1em;
+    width: 1.5em;
+    border:5px solid white; 
+    border-bottom: 10px;  
+}.modal-customized-body::-webkit-scrollbar:hover{
+    background:#CACFD2;
+}.modal-customized-body::-webkit-scrollbar-thumb{
+    background: #3498DB;
+    border-left: 0.4em solid white;
+    border-right: 0.4em solid white;
+    border-radius: 1em;
 }
 </style>

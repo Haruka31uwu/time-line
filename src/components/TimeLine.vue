@@ -11,7 +11,7 @@
               </div>
               
             </div>
-            <div class="timeline-styles info-icon">
+            <div class="timeline-styles info-icon" @click="openInfoMuf">
                 <img src="../assets/info.svg" alt="logo" width="32" height="32"/>
               </div> 
             <time-line-item
@@ -22,7 +22,7 @@
             />
 
         </div>
-        <modal-muf />
+        <modal-muf  v-if="showInfoMuf" @close="closeInfoMuf"/>
      
     </div>
 </template>
@@ -143,9 +143,17 @@ export default {
                     }
                 ],
                 
-            }
+            },
+            showInfoMuf:false
     }
-}
+},methods: {
+      openInfoMuf(){
+        this.showInfoMuf=true
+      },
+      closeInfoMuf(){
+        this.showInfoMuf=false
+      }
+    },
 }
 </script>
 <style scoped>
