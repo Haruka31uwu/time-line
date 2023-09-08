@@ -3,13 +3,13 @@
     <svg
   width="1000"
   height="600"
-  viewBox="0 0 1000 3000"
+  viewBox="0 0 1000 2000"
   xmlns="http://www.w3.org/2000/svg">
   <defs v-for="(item,index) in numberOfPaths " :key="`def-${index}`" >
     <linearGradient v-if="(index) % 5 === 0" :id="`fillGradient-${index+1}`"
     :x1="getX1(index+1)" :x2="getX2(index+1)" y1="0%" y2="100%"
     >
-    <stop offset="0%" style="stop-color: black; stop-opacity: 1" >
+    <stop offset="0%" :style="`stop-color: ${randomColors[Math.floor(Math.random()*randomColors.length)]}; stop-opacity: 1`" >
       <animate attributeName="offset" values="0; 1" :begin="`${timeBetweenPaths*(index+1)}s`"
       :dur="timeBetweenPaths+'s'"  repeatCount="1" fill="freeze"/>
       </stop>
@@ -57,7 +57,7 @@
 
     </clipPath>
         <linearGradient :id="`fillGradient-${index+1}`" v-if="(index ) % 5 !== 0">        
-            <stop offset="0%" :stop-color="Math.floor((index)/5)%2==0?'black':'white'">
+            <stop offset="0%" :stop-color="randomColors[Math.floor(Math.random()*randomColors.length)]">
                 <animate
                     attributeName="offset"
                     :values="Math.floor((index)/5)%2==0?'0; 1':'1; 0'"
@@ -67,7 +67,7 @@
                     fill="freeze"
                 />
             </stop>
-            <stop offset="100%" :stop-color="Math.floor((index)/5)%2==0?'white':'black'">
+            <stop offset="100%" :stop-color="randomColors[Math.floor(Math.random()*randomColors.length)]">
             <animate
               attributeName="offset"
               :values="Math.floor((index)/5)%2==0?'0; 1':'1; 0'"
@@ -81,8 +81,7 @@
     </defs>
 
     <g v-for="(item,index) in numberOfPaths " :key="index">
-      
-      <rect class="path-track-rect" 
+      <rect class="path-track-rect"  style="cursor: pointer;" 
         :id="`${index}-owo`" 
         width="200"
         height="400"
@@ -92,7 +91,7 @@
         v-if="(index ) % 5 === 0"
         fill="none">
       </rect>
-      <path v-else class="path-track-rect" :d="
+      <path v-else class="path-track-rect" style="cursor: pointer;" :d="
       Math.floor((index)/5)%2==0?
       `M ${getPathData(index)} 
       ${100+(190*(Math.floor((index)/5)))}
@@ -107,36 +106,26 @@
       h 200 
       Z`" fill="white"  ></path>
     </g>
-    <!-- <path
-        d="M 950 100 C 1125 100,1140 340, 950 340 v -50 C 65 295, 1070 180, 950 150 v -50 Z"
-        fill="none"
-        stroke="red"
-        stroke-width="1"
-      /> -->
-       
-      
-    <!-- <path class="path-track-rect" 
-    id="path-1"
-    d="M 150 100 h 150 v 50 h -150 Z"
-    fill="white"></path>
-    <path class="path-track-rect" id="path-2" d="M 300 100 h 200 v 50 h -200"   fill="white" stroke-width="1" ></path> -->
-    <!-- <path class="path-track-rect" d="M 500 100 h 200 v 50 h -200"  fill="white"  stroke-width="1" ></path>
-    <path class="path-track-rect" d="M 700 100 h 200 v 50 h -200"   fill="white"  stroke-width="1" ></path>
-    <path d="M 900 300 h -200 v -50 h 200" stroke="red" stroke-width="1"></path> -->
-    <!-- <path d="M 900 100 C 1020,100, 1020,300 900 300 v -50 C 950 250, 950 150,900 150" stroke="red" stroke-width="1" fill="black"/> -->
-
-
 </svg>
     </div>
 </template>
 <script>
-// import anime from 'animejs';
-
 export default {
     data(){
         return{
             timeBetweenPaths:0.05,
-            numberOfPaths:100,
+            numberOfPaths:50,
+            randomColors:[
+            '#2980B9',
+            '#27AE60',
+            '#8E44AD',
+            '#F39C12',
+            '#E74C3C',
+            '#3498DB',
+            '#1ABC9C',
+            '#2C3E50',
+            '#E67E22',
+            ]
         }
     },methods:{
       fillGradient(){  
@@ -200,8 +189,25 @@ return startX;
     }.item{
         width:100%;
         height: 100%;
-    } 
+    } .path-track-rect:hover{
+      animation: path-track-rect-hover 1s ease-in-out forwards;
+      transform-origin: center;
+      transition: 0.5s ease-in-out;
+      /* not stop animation on hover out */
+      animation-iteration-count: 1  ;
 
+    }
+    @keyframes path-track-rect-hover{
+      0%{
+        transform: scale(1);
+      }
+      50%{
+        transform: scale(1.1);
+      }
+      100%{
+        transform: scale(1);
+      }
+    }
 
 
 
