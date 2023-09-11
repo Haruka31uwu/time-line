@@ -1,19 +1,16 @@
 <template>
   <div id="app">
-  <time-line v-show="false"/>
-  <time-line-individual />
-  <flag-component/>
+  <time-line />
+
   </div>
 </template>
 
 <script>
 import TimeLine from './components/TimeLine.vue'
-import TimeLineIndividual from './components/TimeLineIndividual.vue';
 export default {
   name: 'App',
   components: {
-    TimeLine,
-    TimeLineIndividual,
+    TimeLine
     
   }
 }

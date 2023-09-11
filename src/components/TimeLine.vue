@@ -5,7 +5,7 @@
               <div class="timeline-search">
               <input class="timeline-search-input" placeholder="Search Candidate" v-model="inputText"/>
               <div class="timeline-styles">
-                <img src="../assets/paint.svg" alt="logo" width="32" height="32"/>
+                <img src="@/assets/paint.svg" alt="logo" width="32" height="32"/>
               </div>
               <div class="filtered-options">
                 <div class="filtered-option" v-for="(option,index) in filteredOptions" :key="index" @click="autocompleteName">
@@ -16,7 +16,7 @@
               </div>
              
               <div class="timeline-styles info-icon" @click="openInfoMuf">
-                <img src="../assets/info.svg" alt="logo" width="32" height="32"/>
+                <img src="@/assets/info.svg" alt="logo" width="32" height="32"/>
               </div> 
             </div>
             
@@ -28,7 +28,7 @@
             />
 
         </div>
-        <modal-muf  v-if="showInfoMuf" @close="closeInfoMuf"/>
+        <modal-muf  :mof-data="mofData" v-if="showInfoMuf" @close="closeInfoMuf"/>
      
     </div>
 </template>
@@ -41,7 +41,206 @@ export default {
         timelineItems:{
             type:Object,
             required:false,
-            default:()=>({})
+            default:()=>({
+    "jobTitleInfo": {
+        "mofId": 4,
+        "jobTitle": "Full Stack",
+        "dateStart": "2023-09-08",
+        "department": "PARAGON"
+    },
+    "stages": [
+        {
+            "name": "CV EVALUATION",
+            "description": "Cv evaluation is in progress by the HR department",
+            "candidates": []
+        },
+        {
+            "name": "PHONE INTERVIEW ",
+            "description": "Calling ",
+            "candidates": []
+        },
+        {
+            "name": "IN-PERSON INTERVIEW",
+            "description": "In Person Interview is in Progress",
+            "candidates": [
+                {
+                    "name": "Liam Davis",
+                    "idCandidate": 20
+                },
+                {
+                    "name": "James Davis",
+                    "idCandidate": 8
+                }
+            ]
+        },
+        {
+            "name": "PHYCOLOGICAL TEST",
+            "description": "A Phyco Test is in Progress",
+            "candidates": [
+                {
+                    "name": "Sophia Martinez",
+                    "idCandidate": 9
+                }
+            ]
+        },
+        {
+            "name": "TECHNICAL TEST",
+            "description": "A Technical Test is in Progress",
+            "candidates": [
+                {
+                    "name": "Isabella Taylor",
+                    "idCandidate": 15
+                },
+                {
+                    "name": "Benjamin Garcia",
+                    "idCandidate": 10
+                }
+            ]
+        },
+        {
+            "name": "WAITING FOR CHIEF APPROVE",
+            "description": "Waiting for Chief Approve",
+            "candidates": [
+                {
+                    "name": "Noah Gonzalez",
+                    "idCandidate": 14
+                }
+            ]
+        },
+        {
+            "name": "APPROVE BY CHIEF",
+            "description": "Approved",
+            "candidates": [
+                {
+                    "name": "Mia Smith",
+                    "idCandidate": 13
+                },
+                {
+                    "name": "Liam Hernandez",
+                    "idCandidate": 12
+                },
+                {
+                    "name": "Jane Smith",
+                    "idCandidate": 3
+                },
+                {
+                    "name": "Emily Brown",
+                    "idCandidate": 5
+                }
+            ]
+        },
+        {
+            "name": "REJECTED BY CHIEF",
+            "description": "Rejected",
+            "candidates": [
+                {
+                    "name": "William Wilson",
+                    "idCandidate": 6
+                },
+                {
+                    "name": "Ava Johnson",
+                    "idCandidate": 19
+                },
+                {
+                    "name": "John Doe",
+                    "idCandidate": 2
+                },
+                {
+                    "name": "Elijah Rodriguez",
+                    "idCandidate": 16
+                },
+                {
+                    "name": "Ava Lopez",
+                    "idCandidate": 11
+                },
+                {
+                    "name": "Francis Torres",
+                    "idCandidate": 1
+                },
+                {
+                    "name": "Olivia Jones",
+                    "idCandidate": 7
+                },
+                {
+                    "name": "Olivia Brown",
+                    "idCandidate": 17
+                },
+                {
+                    "name": "Michael Johnson",
+                    "idCandidate": 4
+                },
+                {
+                    "name": "Charlotte Williams",
+                    "idCandidate": 21
+                },
+                {
+                    "name": "Lucas Smith",
+                    "idCandidate": 18
+                }
+            ]
+        }
+    ],
+    "mofData": {
+        "skills": [
+            {
+                "id": 1,
+                "marked": true,
+                "description": "Empático y capacidad de comunicacion."
+            },
+            {
+                "id": 2,
+                "marked": true,
+                "description": "Flexible y permeable al cambio."
+            },
+            {
+                "id": 5,
+                "marked": true,
+                "description": "Vocación de servicio."
+            },
+            {
+                "id": 6,
+                "marked": true,
+                "description": "Manejo del estrés."
+            },
+            {
+                "id": 8,
+                "marked": true,
+                "description": "Proactividad y capacidad de resolucion de problemas."
+            },
+            {
+                "id": 11,
+                "marked": true,
+                "description": "Pensamiento analítico."
+            },
+            {
+                "id": 12,
+                "marked": true,
+                "description": "Creatividad e innovación."
+            }
+        ],
+        "mission": "aa",
+        "authonomy": "low",
+        "functions": [
+            "aaa"
+        ],
+        "relation_job": {
+            "external": [
+                "aa"
+            ],
+            "internal": [
+                "aa"
+            ]
+        },
+        "requirements": {
+            "maximum_formation": "sadasd",
+            "maximun_education": "xddd",
+            "minimun_education": "sadasd",
+            "minimun_formation": "asdsadasdas",
+            "maximum_experience": "ad",
+            "minimum_experience": "asdad"
+        }
+    }
+})
         }
     },
     components:{
@@ -69,16 +268,19 @@ export default {
             }
           ],
           inputText:'',
-          filteredOptions:[]
+          filteredOptions:[],
+          mofData:{}  
     }
 },
 methods: {
       openInfoMuf(){
         this.showInfoMuf=true
         const timeline=document.querySelector('.timeline')
-        timeline.style.filter="blur(5px)"
         timeline.setAttribute("aria-hidden", "true");
-        timeline.style.pointerEvents="none"
+        const timelineOptions=document.querySelector('.timeline-options')
+        timelineOptions.style.pointerEvents="none"
+        this.mofData=this.timelineItems.mofData
+
       },
       closeInfoMuf(){
         this.showInfoMuf=false
@@ -86,6 +288,8 @@ methods: {
         timeline.style.filter="blur(0px)"
         timeline.setAttribute("aria-hidden", "false");
         timeline.style.pointerEvents="auto"
+        const timelineOptions=document.querySelector('.timeline-options')
+        timelineOptions.style.pointerEvents="auto"
       },
       autocompleteName(e){
         this.inputText=e.target.textContent
@@ -108,8 +312,8 @@ watch:{
 <style scoped>
 .timeline{
     width: 100%;
-    height:100%;
-    max-height: 1000px;
+    height:auto;
+    max-height: 50em;
     margin:0 auto;
     display: flex;
     flex-direction: column;
@@ -117,6 +321,7 @@ watch:{
     background: #F2F3F4;
     overflow-y: auto;
     position: relative;
+    padding:2em 0;
 }.timeline-search{
     width: 15em;
     min-width: 2em;
@@ -163,7 +368,7 @@ cursor: pointer;
   flex-direction: row;
   width:90%;
   margin:0 auto;
-  z-index: 2;
+  z-index: 99;
 
 }.info-icon{
   position: sticky;

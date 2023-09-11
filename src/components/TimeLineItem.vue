@@ -18,10 +18,7 @@
       "
     ></div>
     <div class="timelineinfo opacity-0" :id="`timelineinfo-${index}`">
-      Quaerat obcaecati voluptatibus architecto iusto suscipit porro facilis
-      magnam ut iste mollitia placeat earum quam quis dolorem ducimus eveniet,
-      nulla quo similique eligendi, sint, consectetur asperiores! Debitis
-      numquam reprehenderit aliquid!
+     {{ stage.description }}
     </div>
   </div>
   <div :id="`${index}-event`" class="timelineevent" >
@@ -32,11 +29,15 @@
         </circle>
       </svg>
     </div>
-  <div :id="`cc-${index}`" class="candidates-container opacity-0" >
+
+  <div :id="`cc-${index}`" class="candidates-container opacity-0" v-if="stage.candidates.length>0" >
     <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate">
       <span>{{candidate.name}}</span>
     </div>
   </div>
+  <div v-else :id="`cc-${index}`" class="candidates-container opacity-0">
+    <h3>Not Postulants here</h3>
+    </div>
   </div>
   <div  v-if="!isEnd" >
     <div class="line" >
@@ -103,7 +104,6 @@ export default {
     openItemInformation(index){
       const itemCircle=document.querySelector(`#ci-border${index}`);
       const timelineInfoConnector=document.querySelector(`#infoconnector-${index}`);
-
       if(itemCircle.classList.contains('circle-border-clicked')){
         itemCircle.classList.remove('circle-border-clicked')
       }else{
@@ -122,10 +122,11 @@ export default {
       if(candidatesContainer.classList.contains('opacity-1')){
         candidatesContainer.classList.remove('opacity-1');
         candidatesContainer.classList.add('opacity-0');
+        candidatesContainer.style.display='none';
+
         timelineInfoConnector.classList.remove('opacity-0');
         timelineInfoConnector.classList.add('opacity-1');
         const timeInfo=document.querySelector(`#timelineinfo-${index}`);
-        console.log('owo')
        
         setTimeout(()=>{
           timeInfo.classList.remove('opacity-0');
@@ -148,6 +149,7 @@ export default {
       }else{
         candidatesContainer.classList.remove('opacity-0');
         candidatesContainer.classList.add('opacity-1');
+        candidatesContainer.style.display='flex';
         timelineInfoConnector.classList.remove('opacity-1');
         timelineInfoConnector.classList.add('opacity-0');
         const timeInfo=document.querySelector(`#timelineinfo-${index}`);
@@ -175,6 +177,7 @@ export default {
       
     },
     hoverItem(index,isHover){
+      console.log('owo')
       const itemCircle=document.querySelector(`#ci-border${index}`);
       const eventName=document.querySelector(`#event-name${index}`);
       if(isHover){
@@ -230,7 +233,7 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .timelineevent {
   width: 200px;
   height: 100px;
@@ -280,6 +283,14 @@ export default {
 
 .timelineinfo {
   width: 40%;
+  margin-top: 1.5em;
+  font-size: 22px;
+  font-family: 'Courier new', courier, monospace;
+  font-weight: 700;
+  background: -webkit-linear-gradient(-86deg, #98FF9C 5%, #3ACE53 53%, #00B141 91%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
 }
 @media (max-width: 1580px) {
   .timelineinfoconnector-right {
@@ -370,6 +381,7 @@ export default {
   transform: translate(-50%, -50%);
   font-family: 'Courier New', Courier, monospace;
   font-weight:400;
+  text-align: center;
 }
 .circle-border {
   fill: none;
@@ -414,7 +426,8 @@ export default {
 .candidates-container{
   width: 100%;
   height: 100%;
-  display: flex;
+  max-height: 100%;
+  display: none;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
@@ -426,7 +439,8 @@ export default {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   position: absolute;
- 
+  overflow-y:auto;
+  padding:0.5em 0;
 }.candidate-container-rigth{
  
   top: 0;
@@ -443,6 +457,7 @@ export default {
   cursor:pointer;
   width: 100%;
   word-break: break-all;
+  text-align: center;
 }.candidate:hover{
   font-weight: bold;
   background: #F2F3F4;
@@ -452,5 +467,15 @@ export default {
 }.opacity-0{
   opacity: 0!important;
 }
+h3 {
+font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+   background: -webkit-linear-gradient(-91deg, #94A6DC 5%, #68A0EF 53%, #0A49AE 91%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 25px;
+ 
 
+}
 </style>    

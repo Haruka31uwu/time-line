@@ -1,27 +1,27 @@
 <template>
     <div class="modal-customized">
-        <div class="modal-customized-header">Modal Muf <span class="close-modal" @click="close()">x</span></div>
+        <div class="modal-customized-header">Modal Mof <span class="close-modal" @click="close()">x</span></div>
         
         <div class="modal-customized-body">
-            <img src="../assets/arrow.png" v-if="page!=1" class="arrow-button prev-button" width="50" height="50" alt="arrow-left" @click="prevPage()" style="transform: rotate(180deg);" />
-            <img src="../assets/arrow.png"  v-if="page!=3" class="arrow-button next-button" width="50" height="50" alt="arrow-right" @click="nextPage()" />
+            <img src="@/assets/arrow.png" v-if="page!=1" class="arrow-button prev-button" width="50" height="50" alt="arrow-left" @click="prevPage()" style="transform: rotate(180deg);" />
+            <img src="@/assets/arrow.png"  v-if="page!=3" class="arrow-button next-button" width="50" height="50" alt="arrow-right" @click="nextPage()" />
             <div class="page-1 page">
                 <div class="modal-customized-body-header"></div>
-                    <img  class="portada" src="../assets/portada.png" alt="home" width="800" height="550"/>
+                    <img  class="portada" src="@/assets/portada.png" alt="home" width="800" height="550"/>
                     <div class="logo-container">
                     
-                        <img class="logo" src="../assets/amg.svg" alt="logo" width="100" height="100"/>
+                        <img class="logo" src="@/assets/amg.svg" alt="logo" width="100" height="100"/>
                         <span class="work-name">
                             Software Engineer
                         </span>
                     </div>
                     <div class="mision-work">
-                        Aporte en la construcción, elaboración del Software Corporativo de la Compañía, el cual tiene como finalidad automatizar los procesos de los diferentes servicios y áreas de AMG.
+                        {{ mofData.mission }}
                     </div>
                     <div class="social-media-icons">
-                        <img style="cursor: pointer;" src="../assets/linkedin.png" alt="" width="50" height="50">
-                        <img style="cursor: pointer;" src="../assets/facebook.png" alt="" width="50" height="50">
-                        <img style="cursor: pointer;" src="../assets/indeed.png" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" src="@/assets/linkedin.png" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" src="@/assets/facebook.png" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" src="@/assets/indeed.png" alt="" width="50" height="50">
                     </div>
             </div>
             <div class="page-2 page">
@@ -29,24 +29,29 @@
                 <div class="page-2-body">
                     <section class="page-2-section">
                         <div class="job-autonomy">
-                            <img src="../assets/autonomy.png" alt="autonomy" width="400" height="300"/>
+                            <img src="@/assets/autonomy.png" alt="autonomy" width="400" height="300"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Job Autonomy</span>
-                                <h2 class="section-value">Baja</h2>
+                                <h2 class="section-value">{{ (mofData.authonomy).toUpperCase() }}
+                                </h2>
                                 <span class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis adipisci, aliquam nemo nam tenetur provident odio minus delectus. Quas nisi assumenda inventore. Quae neque aspernatur officia voluptates quisquam repudiandae magni?</span>
                             </div>
                         </div>
                     </section>
                     <section class="page-2-section">
                         <div class="job-autonomy">
-                            <img src="../assets/functions.png" alt="autonomy" width="500" height="400"/>
+                            <img src="@/assets/functions.png" alt="autonomy" width="500" height="400"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Functions</span>
                                 <h2 class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, enim?</h2>
                                 <span class="section-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum fuga veritatis soluta voluptatibus maiores voluptatum, voluptas natus nesciunt quasi? Libero.</span>
-                               <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                               <div v-for="(item,index) in mofData.functions" :key="index" :class="index%2==0?'functions':'functions-reverse'">
                                 <br>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>    
+                                                           
+                                <div class="function-dot">  
+                                </div>
+                                {{ item }}     
+                            </div>    
                             </div>
                             
                         </div>
@@ -62,17 +67,19 @@
                             <div class="competitions-info">
                                 <span class="section-title">Perfil</span>
                                 <h2 class="section-value">Habilidades</h2>
-                                <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                                <div v-for="(item,index) in mofData.skills.filter((item)=>item.marked==true)" :key="index" :class="'functions'">
                                 <br>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>
+                               <div class="function-dot"></div>
+                                    {{ item.description  }}
                             </div>
-                            <img src="../assets/abilities.png" alt="abilities" width="400" height="300"/>
+                            </div>
+                            <img src="@/assets/abilities.png" alt="abilities" width="400" height="300"/>
                         </div>
                         
                     </section>
                     <section class="page-3-section">
                         <div class="job-autonomy">
-                            <img src="../assets/requirements.png" alt="requirements" width="500" height="400"/>
+                            <img src="@/assets/requirements.png" alt="requirements" width="500" height="400"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Job Requirements</span>
                                 <h2 class="section-value">Job Requirements</h2>
@@ -92,12 +99,15 @@
 </template>
 <script>
 export default{
+    props:{mofData:{type:Object,required:true}},
     data(){
         return{
             page:1
         }
     },
+
     methods:{
+       
         nextPage(){
             const actualPage=document.querySelector(`.page-${this.page}`);
             actualPage.style.display="none";
@@ -135,6 +145,7 @@ export default{
     mounted() {
         const actualPage=document.querySelector(`.page-${this.page}`);
         actualPage.style.display="flex";
+        console.log(this.mofData);
     },
 }
 </script>
@@ -150,7 +161,7 @@ export default{
     width: 60%;
     height: auto;
     margin: 0 auto;
-    min-height: 20em;
+    max-height: 60em;
     min-width: 50%;
     z-index: 9999 ;
     background: white;
@@ -189,6 +200,7 @@ export default{
     text-align: left;
     font-size: 1.8em;
     position: sticky;
+    left: 0;
     top: 0;
     z-index: 2;
     display: flex;
@@ -260,10 +272,7 @@ padding-bottom: 5em;
     width: 100%;
     position:relative;
     transition: all 0.5s ease-in-out;
-
 }
-
-
 .page-1{
     display: none;
 }.page-2{
@@ -291,7 +300,6 @@ padding-bottom: 5em;
     font-size: 3em;
     padding:0;
     margin:0.1em 0 0.2em 0;
-
 }.section-description{
     font-family: 'Courier New', Courier, monospace;
     font-weight:lighter;
@@ -300,14 +308,14 @@ padding-bottom: 5em;
     text-align: justify;
 }    
 .functions{
-    text-align: justify;
+    text-align: start;
     display: flex;
     align-items: center;
     font-family: 'Courier New', Courier, monospace;
-    justify-content: flex-start;
     width: 100%;
     position: relative;
     margin: 0;
+    margin-bottom: 0.5em;
 }.functions-reverse{
     text-align: justify;
     display: flex;
@@ -322,10 +330,13 @@ padding-bottom: 5em;
 .function-dot {
     border-radius: 50%;
     background-color: #3498DB;
-    height:1.8em;
-    width:3em;
+    height:2.1em;
+    width:2.1em;
+    min-width: 2.1em;
     font-weight: bold;
     margin: 0 0.5em;
+    word-break: normal;
+
 }.competitions-info{
     width: 40%;
     word-wrap: break-word;
