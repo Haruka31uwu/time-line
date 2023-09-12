@@ -25,6 +25,7 @@
             :stage="item"
             :is-end="index==timelineItems.stages.length-1"
             :index="index+1"
+            @getPostulantData="(data) => getEmployeeData(data)"
             />
 
         </div>
@@ -273,6 +274,9 @@ export default {
     }
 },
 methods: {
+    getEmployeeData(data){
+      this.$emit('getEmployeeData',data)
+    },
       openInfoMuf(){
         this.showInfoMuf=true
         const timeline=document.querySelector('.timeline')
