@@ -292,7 +292,7 @@ export default {
   font-family: 'Courier new', courier, monospace;
   font-weight: 700;
   background: -webkit-linear-gradient(-86deg, #98FF9C 5%, #3ACE53 53%, #00B141 91%);
-  -webkit-background-clip: text;
+  -webkit-background-clip: text!important;
   -webkit-text-fill-color: transparent;
   
 }
@@ -474,12 +474,12 @@ export default {
 h3 {
 font-family: 'Courier New', Courier, monospace;
   font-size: 20px;
-   background: -webkit-linear-gradient(-91deg, #94A6DC 5%, #68A0EF 53%, #0A49AE 91%);
-  -webkit-background-clip: text;
+  background: -webkit-linear-gradient(-91deg, #94A6DC 5%, #68A0EF 53%, #0A49AE 91%);
+  -webkit-background-clip: text!important;
   -webkit-text-fill-color: transparent;
   font-family: 'Courier New', Courier, monospace;
   line-height: 25px;
- 
+  text-align: center;
 
 }
 </style>    
