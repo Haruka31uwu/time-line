@@ -12,7 +12,7 @@
                     
                         <img class="logo" src="@/assets/amg.svg" alt="logo" width="100" height="100"/>
                         <span class="work-name">
-                            Software Engineer
+                            {{jobTitle}}
                         </span>
                     </div>
                     <div class="mision-work">
@@ -34,7 +34,9 @@
                                 <span class="section-title">Job Autonomy</span>
                                 <h2 class="section-value">{{ (mofData.authonomy).toUpperCase() }}
                                 </h2>
-                                <span class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis adipisci, aliquam nemo nam tenetur provident odio minus delectus. Quas nisi assumenda inventore. Quae neque aspernatur officia voluptates quisquam repudiandae magni?</span>
+                                <span class="section-description">
+                                    {{ getAuthonomyDescription(mofData.authonomy)  }}
+                                </span>
                             </div>
                         </div>
                     </section>
@@ -43,9 +45,12 @@
                             <img src="@/assets/functions.png" alt="autonomy" width="500" height="400"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Functions</span>
-                                <h2 class="section-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, enim?</h2>
-                                <span class="section-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum fuga veritatis soluta voluptatibus maiores voluptatum, voluptas natus nesciunt quasi? Libero.</span>
-                               <div v-for="(item,index) in mofData.functions" :key="index" :class="index%2==0?'functions':'functions-reverse'">
+                                <h2 class="section-description">
+                                    Activities that the job position must perform
+                                    
+                                </h2>
+                               
+                               <div v-for="(item,index) in mofData.functions" :key="index" :class="'functions'">
                                 <br>
                                                            
                                 <div class="function-dot">  
@@ -65,8 +70,8 @@
                         <div class="job-autonomy">
                           
                             <div class="competitions-info">
-                                <span class="section-title">Perfil</span>
-                                <h2 class="section-value">Habilidades</h2>
+                                <span class="section-title">Profile</span>
+                                <h2 class="section-value">Skills</h2>
                                 <div v-for="(item,index) in mofData.skills.filter((item)=>item.marked==true)" :key="index" :class="'functions'">
                                 <br>
                                <div class="function-dot"></div>
@@ -84,10 +89,48 @@
                                 <span class="section-title">Job Requirements</span>
                                 <h2 class="section-value">Job Requirements</h2>
                               
-                                <span class="section-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum fuga veritatis soluta voluptatibus maiores voluptatum, voluptas natus nesciunt quasi? Libero.</span>
-                               <div v-for="(index) in 4" :key="index" :class="index%2==0?'functions':'functions-reverse'">
-                                <br>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, natu<div class="function-dot"></div></div>    
+                                <span class="section-description">
+                                    Maximun and minimun requirements for the job position
+
+                                </span>
+                               <div class="job-requirements">
+                                <span class="job-title">
+                                    Maximum Experience
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.maximum_experience }}
+                                </span>
+                                <span class="job-title">
+                                    Minimum Experience
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.minimum_experience }}
+                                </span>
+                                <span class="job-title">
+                                    Maximum Formation
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.maximum_formation }}
+                                </span>
+                                <span class="job-title">
+                                    Minimun Formation
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.minimum_experience }}
+                                </span>
+                                <span class="job-title">
+                                    Maximum Education
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.maximun_education }}
+                                </span>
+                                <span class="job-title">
+                                    Minimum Experience
+                                </span>
+                                <span class="job-value">
+                                    {{ mofData.requirements.minimun_education }}
+                                </span>
+                                </div>    
                             </div>
                         </div>
                     </section>
@@ -99,7 +142,7 @@
 </template>
 <script>
 export default{
-    props:{mofData:{type:Object,required:true}},
+    props:{mofData:{type:Object,required:true},jobTitle:{type:String,default:"Software Engineer"}},
     data(){
         return{
             page:1
@@ -107,7 +150,16 @@ export default{
     },
 
     methods:{
-       
+        getAuthonomyDescription(value){
+            switch(value){
+                case 'low':
+                    return 'Recibe instrucciones del superior inmediato, sus actividades son    continuamente supervisadas y no tiene autonomía para tomar decisiones.';
+                case 'medium':
+                    return 'Puede tomar decisiones en casos puntuales, como medidas de contingencia y cambios para la mejora del Proceso que le corresponde.'
+                case 'high':
+                    return 'Toma decisiones de forma mayormente amplia en el proceso o procesos que le corresponden';
+            }
+        },
         nextPage(){
             const actualPage=document.querySelector(`.page-${this.page}`);
             actualPage.style.display="none";
@@ -161,7 +213,7 @@ export default{
     width: 60%;
     height: auto;
     margin: 0 auto;
-    max-height: 60em;
+    max-height: 70em;
     min-width: 50%;
     z-index: 9999 ;
     background: white;
@@ -289,6 +341,7 @@ padding-bottom: 5em;
     justify-content: center;
     margin-top: 2em;
 }.autonomy-info{
+    
     width: 40%;
     word-wrap: break-word;
     
@@ -304,8 +357,9 @@ padding-bottom: 5em;
     font-family: 'Courier New', Courier, monospace;
     font-weight:lighter;
     color:#979A9A;
-    word-spacing: 0.2em;
+    word-spacing: 0.5em;
     text-align: justify;
+    font-size: 1.3em;
 }    
 .functions{
     text-align: start;
@@ -314,7 +368,7 @@ padding-bottom: 5em;
     font-family: 'Courier New', Courier, monospace;
     width: 100%;
     position: relative;
-    margin: 0;
+    margin: 0 0.5em;
     margin-bottom: 0.5em;
 }.functions-reverse{
     text-align: justify;
@@ -324,7 +378,7 @@ padding-bottom: 5em;
     justify-content: flex-end;
     font-family: 'Courier New', Courier, monospace;
     width: 100%;
-    margin: 0;
+    margin: 0 1em;
 
 }
 .function-dot {
@@ -368,5 +422,25 @@ padding-bottom: 5em;
     border-left: 0.4em solid white;
     border-right: 0.4em solid white;
     border-radius: 1em;
+}.job-requirements{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 0 1em;
+}.job-requirements .job-title{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #167CC0;
+    margin: 0.5em 0;
+    text-align: start;
+
+}.job-requirements .job-value{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: lighter;
+    font-size: 0.8em;
+    color: #000000;
+    margin: 0.5em 0;
+
 }
 </style>

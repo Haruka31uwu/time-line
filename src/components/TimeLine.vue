@@ -28,7 +28,7 @@
             />
 
         </div>
-        <modal-muf  :mof-data="mofData" v-if="showInfoMuf" @close="closeInfoMuf"/>
+        <modal-muf  :mof-data="mofData" :job-title="timelineItems.jobTitleInfo.jobTitle" v-if="showInfoMuf" @close="closeInfoMuf"/>
      
     </div>
 </template>

@@ -31,7 +31,7 @@
     </div>
 
   <div :id="`cc-${index}`" class="candidates-container opacity-0" v-if="stage.candidates.length>0" >
-    <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate">
+    <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate" @click="getPostulantData(candidate.idCandidate)">
       <span>{{candidate.name}}</span>
     </div>
   </div>
@@ -92,6 +92,10 @@ export default {
     };
   },
   methods: {
+    async getPostulantData(idCandidate){
+      this.$emit('getPostulantData',idCandidate);
+      console.log(idCandidate)
+    },
     /**
      * Set Circle, Line and Connectors Color
      * @param {Number} index index of the item
@@ -177,7 +181,6 @@ export default {
       
     },
     hoverItem(index,isHover){
-      console.log('owo')
       const itemCircle=document.querySelector(`#ci-border${index}`);
       const eventName=document.querySelector(`#event-name${index}`);
       if(isHover){
@@ -231,6 +234,7 @@ export default {
         }
         ,2000)
     },
+    
 };
 </script>
 <style scoped>
