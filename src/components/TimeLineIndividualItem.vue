@@ -4,7 +4,7 @@
     <svg
       width="100%"
       height="100%"
-      viewBox="0 0 1400 1800"
+      :viewBox="`0 0 1400 ${40*numberOfPaths}`"
       xmlns="http://www.w3.org/2000/svg">
       <defs v-for="(item,index) in numberOfPaths " :key="`def-${index}`" >
         <linearGradient v-if="(index) % 5 === 0" :id="`fillGradient-${index+1}`"
