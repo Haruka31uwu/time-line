@@ -2,7 +2,7 @@
     <div style="position: relative;">
           <div class="timeline" >
             <div class="timeline-options">  
-              <div class="timeline-search">
+              <!-- <div class="timeline-search">
               <input class="timeline-search-input" placeholder="Search Candidate" v-model="inputText"/>
               <div class="timeline-styles">
                 <img src="@/assets/paint.svg" alt="logo" width="32" height="32"/>
@@ -11,12 +11,12 @@
                 <div class="filtered-option" v-for="(option,index) in filteredOptions" :key="index" @click="autocompleteName">
                   {{option.name}}
                 </div>
-              </div>
+              </div> 
               
-              </div>
+              </div>-->
              
               <div class="timeline-styles info-icon" @click="openInfoMuf">
-                <img src="@/assets/info.svg" alt="logo" width="32" height="32"/>
+                <img :src="imgsSrc.info" alt="logo" width="32" height="32"/>
               </div> 
             </div>
             
@@ -29,7 +29,12 @@
             />
 
         </div>
-        <modal-muf  :mof-data="mofData" :job-title="timelineItems.jobTitleInfo.jobTitle" v-if="showInfoMuf" @close="closeInfoMuf"/>
+        <div class="background"></div>
+        <modal-muf  
+        :mof-data="mofData" 
+        :job-title="timelineItems.jobTitleInfo.jobTitle" 
+        :imgs-src="imgsSrc"
+        v-if="showInfoMuf" @close="closeInfoMuf"/>
      
     </div>
 </template>
@@ -43,210 +48,234 @@ export default {
             type:Object,
             required:false,
             default:()=>({
-    "jobTitleInfo": {
-        "mofId": 4,
-        "jobTitle": "Full Stack",
-        "dateStart": "2023-09-08",
-        "department": "PARAGON"
-    },
-    "stages": [
-        {
-            "name": "CV EVALUATION",
-            "description": "Cv evaluation is in progress by the HR department",
-            "candidates": []
-        },
-        {
-            "name": "PHONE INTERVIEW ",
-            "description": "Calling ",
-            "candidates": []
-        },
-        {
-            "name": "IN-PERSON INTERVIEW",
-            "description": "In Person Interview is in Progress",
-            "candidates": [
-                {
-                    "name": "Liam Davis",
-                    "idCandidate": 20
-                },
-                {
-                    "name": "James Davis",
-                    "idCandidate": 8
-                }
-            ]
-        },
-        {
-            "name": "PHYCOLOGICAL TEST",
-            "description": "A Phyco Test is in Progress",
-            "candidates": [
-                {
-                    "name": "Sophia Martinez",
-                    "idCandidate": 9
-                }
-            ]
-        },
-        {
-            "name": "TECHNICAL TEST",
-            "description": "A Technical Test is in Progress",
-            "candidates": [
-                {
-                    "name": "Isabella Taylor",
-                    "idCandidate": 15
-                },
-                {
-                    "name": "Benjamin Garcia",
-                    "idCandidate": 10
-                }
-            ]
-        },
-        {
-            "name": "WAITING FOR CHIEF APPROVE",
-            "description": "Waiting for Chief Approve",
-            "candidates": [
-                {
-                    "name": "Noah Gonzalez",
-                    "idCandidate": 14
-                }
-            ]
-        },
-        {
-            "name": "APPROVE BY CHIEF",
-            "description": "Approved",
-            "candidates": [
-                {
-                    "name": "Mia Smith",
-                    "idCandidate": 13
-                },
-                {
-                    "name": "Liam Hernandez",
-                    "idCandidate": 12
-                },
-                {
-                    "name": "Jane Smith",
-                    "idCandidate": 3
-                },
-                {
-                    "name": "Emily Brown",
-                    "idCandidate": 5
-                }
-            ]
-        },
-        {
-            "name": "REJECTED BY CHIEF",
-            "description": "Rejected",
-            "candidates": [
-                {
-                    "name": "William Wilson",
-                    "idCandidate": 6
-                },
-                {
-                    "name": "Ava Johnson",
-                    "idCandidate": 19
-                },
-                {
-                    "name": "John Doe",
-                    "idCandidate": 2
-                },
-                {
-                    "name": "Elijah Rodriguez",
-                    "idCandidate": 16
-                },
-                {
-                    "name": "Ava Lopez",
-                    "idCandidate": 11
-                },
-                {
-                    "name": "Francis Torres",
-                    "idCandidate": 1
-                },
-                {
-                    "name": "Olivia Jones",
-                    "idCandidate": 7
-                },
-                {
-                    "name": "Olivia Brown",
-                    "idCandidate": 17
-                },
-                {
-                    "name": "Michael Johnson",
-                    "idCandidate": 4
-                },
-                {
-                    "name": "Charlotte Williams",
-                    "idCandidate": 21
-                },
-                {
-                    "name": "Lucas Smith",
-                    "idCandidate": 18
-                }
-            ]
-        }
-    ],
-    "mofData": {
-        "skills": [
-            {
-                "id": 1,
-                "marked": true,
-                "description": "Empático y capacidad de comunicacion."
-            },
-            {
-                "id": 2,
-                "marked": true,
-                "description": "Flexible y permeable al cambio."
-            },
-            {
-                "id": 5,
-                "marked": true,
-                "description": "Vocación de servicio."
-            },
-            {
-                "id": 6,
-                "marked": true,
-                "description": "Manejo del estrés."
-            },
-            {
-                "id": 8,
-                "marked": true,
-                "description": "Proactividad y capacidad de resolucion de problemas."
-            },
-            {
-                "id": 11,
-                "marked": true,
-                "description": "Pensamiento analítico."
-            },
-            {
-                "id": 12,
-                "marked": true,
-                "description": "Creatividad e innovación."
-            }
-        ],
-        "mission": "aa",
-        "authonomy": "low",
-        "functions": [
-            "aaa"
-        ],
-        "relation_job": {
-            "external": [
-                "aa"
-            ],
-            "internal": [
-                "aa"
-            ]
-        },
-        "requirements": {
-            "maximum_formation": "sadasd",
-            "maximun_education": "xddd",
-            "minimun_education": "sadasd",
-            "minimun_formation": "asdsadasdas",
-            "maximum_experience": "ad",
-            "minimum_experience": "asdad"
-        }
-    }
+              "jobTitleInfo": {
+                  "mofId": 4,
+                  "jobTitle": "Full Stack",
+                  "dateStart": "2023-09-08",
+                  "department": "PARAGON"
+              },
+              "stages": [
+                  {
+                      "name": "CV EVALUATION",
+                      "description": "Cv evaluation is in progress by the HR department",
+                      "candidates": []
+                  },
+                  {
+                      "name": "PHONE INTERVIEW ",
+                      "description": "Calling ",
+                      "candidates": []
+                  },
+                  {
+                      "name": "IN-PERSON INTERVIEW",
+                      "description": "In Person Interview is in Progress",
+                      "candidates": [
+                          {
+                              "name": "Liam Davis",
+                              "idCandidate": 20
+                          },
+                          {
+                              "name": "James Davis",
+                              "idCandidate": 8
+                          }
+                      ]
+                  },
+                  {
+                      "name": "PHYCOLOGICAL TEST",
+                      "description": "A Phyco Test is in Progress",
+                      "candidates": [
+                          {
+                              "name": "Sophia Martinez",
+                              "idCandidate": 9
+                          }
+                      ]
+                  },
+                  {
+                      "name": "TECHNICAL TEST",
+                      "description": "A Technical Test is in Progress",
+                      "candidates": [
+                          {
+                              "name": "Isabella Taylor",
+                              "idCandidate": 15
+                          },
+                          {
+                              "name": "Benjamin Garcia",
+                              "idCandidate": 10
+                          }
+                      ]
+                  },
+                  {
+                      "name": "WAITING FOR CHIEF APPROVE",
+                      "description": "Waiting for Chief Approve",
+                      "candidates": [
+                          {
+                              "name": "Noah Gonzalez",
+                              "idCandidate": 14
+                          }
+                      ]
+                  },
+                  {
+                      "name": "APPROVE BY CHIEF",
+                      "description": "Approved",
+                      "candidates": [
+                          {
+                              "name": "Mia Smith",
+                              "idCandidate": 13
+                          },
+                          {
+                              "name": "Liam Hernandez",
+                              "idCandidate": 12
+                          },
+                          {
+                              "name": "Jane Smith",
+                              "idCandidate": 3
+                          },
+                          {
+                              "name": "Emily Brown",
+                              "idCandidate": 5
+                          }
+                      ]
+                  },
+                  {
+                      "name": "REJECTED BY CHIEF",
+                      "description": "Rejected",
+                      "candidates": [
+                          {
+                              "name": "William Wilson",
+                              "idCandidate": 6
+                          },
+                          {
+                              "name": "Ava Johnson",
+                              "idCandidate": 19
+                          },
+                          {
+                              "name": "John Doe",
+                              "idCandidate": 2
+                          },
+                          {
+                              "name": "Elijah Rodriguez",
+                              "idCandidate": 16
+                          },
+                          {
+                              "name": "Ava Lopez",
+                              "idCandidate": 11
+                          },
+                          {
+                              "name": "Francis Torres",
+                              "idCandidate": 1
+                          },
+                          {
+                              "name": "Olivia Jones",
+                              "idCandidate": 7
+                          },
+                          {
+                              "name": "Olivia Brown",
+                              "idCandidate": 17
+                          },
+                          {
+                              "name": "Michael Johnson",
+                              "idCandidate": 4
+                          },
+                          {
+                              "name": "Charlotte Williams",
+                              "idCandidate": 21
+                          },
+                          {
+                              "name": "Lucas Smith",
+                              "idCandidate": 18
+                          }
+                      ]
+                  }
+              ],
+              "mofData": {
+                  "skills": [
+                      {
+                          "id": 1,
+                          "marked": true,
+                          "description": "Empático y capacidad de comunicacion."
+                      },
+                      {
+                          "id": 2,
+                          "marked": true,
+                          "description": "Flexible y permeable al cambio."
+                      },
+                      {
+                          "id": 5,
+                          "marked": true,
+                          "description": "Vocación de servicio."
+                      },
+                      {
+                          "id": 6,
+                          "marked": true,
+                          "description": "Manejo del estrés."
+                      },
+                      {
+                          "id": 8,
+                          "marked": true,
+                          "description": "Proactividad y capacidad de resolucion de problemas."
+                      },
+                      {
+                          "id": 11,
+                          "marked": true,
+                          "description": "Pensamiento analítico."
+                      },
+                      {
+                          "id": 12,
+                          "marked": true,
+                          "description": "Creatividad e innovación."
+                      }
+                  ],
+                  "mission": "aa",
+                  "authonomy": "low",
+                  "functions": [
+                      "aaa"
+                  ],
+                  "relation_job": {
+                      "external": [
+                          "aa"
+                      ],
+                      "internal": [
+                          "aa"
+                      ]
+                  },
+                  "requirements": {
+                      "maximum_formation": "sadasd",
+                      "maximun_education": "xddd",
+                      "minimun_education": "sadasd",
+                      "minimun_formation": "asdsadasdas",
+                      "maximum_experience": "ad",
+                      "minimum_experience": "asdad"
+                  }
+              }
 })
+        },
+        imgsSrc:{
+          type:Object,
+          default:()=>({
+                abilities:require('@/assets/abilities.png'),
+                autonomy:require('@/assets/autonomy.png'),
+                functions:require('@/assets/functions.png'),
+                requirements:require('@/assets/requirements.png'),
+                portada:require('@/assets/portada.png'),
+                arrow:require('@/assets/arrow.png'),
+                linkedin:require('@/assets/linkedin.png'),
+                facebook:require('@/assets/facebook.png'),
+                indeed:require('@/assets/indeed.png'),
+                logo:require('@/assets/amg.svg'),
+                info:require('@/assets/info.svg')
+          })
+        },
+        background:{
+          type:Object,
+          default:()=>({
+            url:require('@/assets/patternpad-5.svg'),
+
+          })
         }
     },
     components:{
         TimeLineItem,
-        ModalMuf
+        ModalMuf,
+
     },
     data(){
         return {
@@ -297,7 +326,12 @@ methods: {
       },
       autocompleteName(e){
         this.inputText=e.target.textContent
+        console.log(e.target.value)
       }
+    },
+    mounted(){
+      const timeline=document.querySelector('.background')
+      timeline.style.backgroundImage=`url(${this.background.url})`
     },
 watch:{
   inputText(oldValue){
@@ -321,11 +355,36 @@ watch:{
     display: flex;
     flex-direction: column;
     padding:3em 0;
-    background: #F2F3F4;
+   
+    background-position: center;;
     overflow-y: auto;
     position: relative;
     padding:2em 0;
+}.background{
+    position: absolute;
+    background-repeat: repeat;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity:.5;
+    filter: blur(5px);
+    top:0;
+    left:0;
 }.timeline-search{
+    width: 15em;
+    min-width: 2em;
+    position: relative;
+    display: flex;
+}.timeline-search-input{
+  display: inline;
+  width: 100%;
+  min-width: 20em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 6px 10px 5px 0px rgba(179,179,179,0.75);
+}
+.timeline-search{
     width: 15em;
     min-width: 2em;
     position: relative;
@@ -366,7 +425,7 @@ cursor: pointer;
   position: sticky;
   top:0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   flex-direction: row;
   width:90%;

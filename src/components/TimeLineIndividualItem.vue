@@ -4,7 +4,7 @@
     <svg
       width="100%"
       height="100%"
-      :viewBox="`0 0 1400 ${40*numberOfPaths}`"
+      :viewBox="`-100 0 1400 ${40*numberOfPaths}`"
       xmlns="http://www.w3.org/2000/svg">
       <defs v-for="(item,index) in numberOfPaths " :key="`def-${index}`" >
         <linearGradient v-if="(index) % 5 === 0" :id="`fillGradient-${index+1}`"
@@ -156,6 +156,24 @@ export default {
         type:Number,
         default:10
       },
+      welcomeStatus:{
+        type:Number,
+        default:8
+      },
+      statusNamePosition:{
+        type:Object,
+        default:()=>({
+          x:120,
+          y:90
+        })
+      },
+      statusDatePosition:{
+        type:Object,
+        default:()=>({
+          x:190,
+          y:50
+        })
+      }
       
     },
     components:{
@@ -244,7 +262,7 @@ export default {
             clearInterval(interval2);
           }
         },this.timeBetweenPaths*7000)
-        if(this.stage.findIndex((item)=>item.applicant_status_id==8)!=-1){
+        if(this.stage.findIndex((item)=>item.applicant_status_id==this.welcomeStatus)!=-1){
           this.showWelcome()
         }
        
@@ -332,10 +350,10 @@ export default {
         const eventDateItems= document.querySelectorAll('.event-item-stg-date');
         events.forEach((event,index)=>{
         if(eventCircles[index]){
-          event.style.left=eventCircles[index].getBoundingClientRect().x+120+'px';
-          event.style.top=eventCircles[index].getBoundingClientRect().y-90+'px';
-          eventDateItems[index].style.left=eventCircles[index].getBoundingClientRect().x+190+'px';
-          eventDateItems[index].style.top=eventCircles[index].getBoundingClientRect().y-50+'px';
+          event.style.left=eventCircles[index].getBoundingClientRect().x+this.statusNamePosition.x+'px';
+          event.style.top=eventCircles[index].getBoundingClientRect().y-this.statusNamePosition.y+'px';
+          eventDateItems[index].style.left=eventCircles[index].getBoundingClientRect().x+this.statusDatePosition.x+'px';
+          eventDateItems[index].style.top=eventCircles[index].getBoundingClientRect().y-this.statusDatePosition.y+'px';
         }
         }) 
       }
@@ -343,6 +361,7 @@ export default {
       const timeline= document.querySelector('.timeline-individual-container');
       const welcome= document.querySelector('.welcome-component');
       const backdrop= document.querySelector('.backdrop');
+      if(timeline.style.pointerEvents=='none'){
       timeline.style.transition="0.5s ease-in-out";
       timeline.style.pointerEvents="auto";
       timeline.style.filter="blur(0px)";
@@ -351,6 +370,7 @@ export default {
       backdrop.style.zIndex="-1";
       welcome.classList.remove('dblock');
       welcome.classList.add('dnone');
+    }
     }
   },
       mounted(){
@@ -380,31 +400,12 @@ export default {
     }
 
     
-     .path-track-rect:hover{
-      animation: path-track-rect-hover 1s ease-in-out;
-      transform-origin: center;
-      transition: 0.5s ease-in-out;
-      /* not stop animation on hover out */
-      animation-iteration-count: 2  ;
-
-    }
-    @keyframes path-track-rect-hover{
-      0%{
-        transform: scale(1);
-      }
-      50%{
-        transform: scale(1.1);
-      }
-      100%{
-        transform: scale(1);
-      }
-    }
+     
 .timeline-individual-container{
     width: 100%;
     height: 100%;
     position: relative;
-    
-    overflow: hidden;
+    overflow: auto;
     z-index: 2;
 }.flag{
     position: absolute;
@@ -456,7 +457,7 @@ export default {
   position: absolute;
   z-index:10;
   font-size: 1.7em;
-  text-align: center;
+  text-align: start;
   word-break: break-word;
   width: 400px;
   font-weight: bold;

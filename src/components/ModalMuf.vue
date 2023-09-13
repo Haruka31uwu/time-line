@@ -3,14 +3,14 @@
         <div class="modal-customized-header">Modal Mof <span class="close-modal" @click="close()">x</span></div>
         
         <div class="modal-customized-body">
-            <img src="@/assets/arrow.png" v-if="page!=1" class="arrow-button prev-button" width="50" height="50" alt="arrow-left" @click="prevPage()" style="transform: rotate(180deg);" />
-            <img src="@/assets/arrow.png"  v-if="page!=3" class="arrow-button next-button" width="50" height="50" alt="arrow-right" @click="nextPage()" />
+            <img :src="imgsSrc.arrow" v-if="page!=1" class="arrow-button prev-button" width="50" height="50" alt="arrow-left" @click="prevPage()" style="transform: rotate(180deg);" />
+            <img :src="imgsSrc.arrow"  v-if="page!=3" class="arrow-button next-button" width="50" height="50" alt="arrow-right" @click="nextPage()" />
             <div class="page-1 page">
                 <div class="modal-customized-body-header"></div>
-                    <img  class="portada" src="@/assets/portada.png" alt="home" width="800" height="550"/>
+                    <img  class="portada" :src="imgsSrc.portada" alt="home" width="800" height="550"/>
                     <div class="logo-container">
                     
-                        <img class="logo" src="@/assets/amg.svg" alt="logo" width="100" height="100"/>
+                        <img class="logo" :src="imgsSrc.logo" alt="logo" width="100" height="100"/>
                         <span class="work-name">
                             {{jobTitle}}
                         </span>
@@ -19,9 +19,9 @@
                         {{ mofData.mission }}
                     </div>
                     <div class="social-media-icons">
-                        <img style="cursor: pointer;" src="@/assets/linkedin.png" alt="" width="50" height="50">
-                        <img style="cursor: pointer;" src="@/assets/facebook.png" alt="" width="50" height="50">
-                        <img style="cursor: pointer;" src="@/assets/indeed.png" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" :src="imgsSrc.linkedin" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" :src="imgsSrc.facebook" alt="" width="50" height="50">
+                        <img style="cursor: pointer;" :src="imgsSrc.indeed" alt="" width="50" height="50">
                     </div>
             </div>
             <div class="page-2 page">
@@ -29,7 +29,7 @@
                 <div class="page-2-body">
                     <section class="page-2-section">
                         <div class="job-autonomy">
-                            <img src="@/assets/autonomy.png" alt="autonomy" width="400" height="300"/>
+                            <img :src="imgsSrc.autonomy" alt="autonomy" width="400" height="300"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Job Autonomy</span>
                                 <h2 class="section-value">{{ (mofData.authonomy).toUpperCase() }}
@@ -42,7 +42,7 @@
                     </section>
                     <section class="page-2-section">
                         <div class="job-autonomy">
-                            <img src="@/assets/functions.png" alt="autonomy" width="500" height="400"/>
+                            <img :src="imgsSrc.functions" alt="autonomy" width="500" height="400"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Functions</span>
                                 <h2 class="section-description">
@@ -78,13 +78,13 @@
                                     {{ item.description  }}
                             </div>
                             </div>
-                            <img src="@/assets/abilities.png" alt="abilities" width="400" height="300"/>
+                            <img :src="imgsSrc.abilities" alt="abilities" width="400" height="300"/>
                         </div>
                         
                     </section>
                     <section class="page-3-section">
                         <div class="job-autonomy">
-                            <img src="@/assets/requirements.png" alt="requirements" width="500" height="400"/>
+                            <img :src="imgsSrc.requirements" alt="requirements" width="500" height="400"/>
                             <div class="autonomy-info">
                                 <span class="section-title">Job Requirements</span>
                                 <h2 class="section-value">Job Requirements</h2>
@@ -142,13 +142,39 @@
 </template>
 <script>
 export default{
-    props:{mofData:{type:Object,required:true},jobTitle:{type:String,default:"Software Engineer"}},
+    props:{
+        mofData:{
+            type:Object,required:true
+        },
+        jobTitle:{
+            type:String,
+            default:"Software Engineer"
+        },
+        imgsSrc:{
+            type:Object,
+            default:()=>({
+                abilities:require('@/assets/abilities.png'),
+                autonomy:require('@/assets/autonomy.png'),
+                functions:require('@/assets/functions.png'),
+                requirements:require('@/assets/requirements.png'),
+                portada:require('@/assets/portada.png'),
+                arrow:require('@/assets/arrow.png'),
+                linkedin:require('@/assets/linkedin.png'),
+                facebook:require('@/assets/facebook.png'),
+                indeed:require('@/assets/indeed.png'),
+                logo:require('@/assets/amg.svg'),
+
+            })
+    },
+},
     data(){
         return{
             page:1
         }
     },
-
+    created(){
+        console.log(typeof this.imgsSrc.linkedin);
+    },
     methods:{
         getAuthonomyDescription(value){
             switch(value){
@@ -256,6 +282,7 @@ export default{
     z-index: 2;
     display: flex;
     justify-content: space-between;
+    padding-bottom:2em;
 }.modal-customized-body{
     display: block;
     height: auto;

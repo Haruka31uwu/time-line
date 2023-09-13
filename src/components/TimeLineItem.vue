@@ -18,8 +18,10 @@
       "
     ></div>
     <div class="timelineinfo opacity-0" :id="`timelineinfo-${index}`">
-     {{ stage.description }}
-    </div>
+     <stage-info style="width:100%;" :text="stage.description" :gradient="setGradientColors(index)" :index="index">
+    
+    </stage-info>
+  </div>
   </div>
   <div :id="`${index}-event`" class="timelineevent" >
     <div class="circle"  @click="openItemInformation(index)" @mouseenter="hoverItem(index,true)" @mouseleave="hoverItem(index,false)">
@@ -49,7 +51,12 @@
   </div>
 </template>
 <script>
+import  StageInfo from './StageInfo.vue'
+
 export default {
+  components: {
+    StageInfo,
+  },
   props: {
     stage: {
       type: Object,
@@ -78,6 +85,28 @@ export default {
           '#2C3E50',
           '#E67E22',
         ],
+        randomColorsGradient1:[
+            '#8EBCDB',
+            '#88C7A2',
+            '#DDB2F0',
+            '#EECE9A',
+            '#FA9F95',
+            '#85C5F0',
+            '#7BE6D1',
+            '#515961',
+            '#FAD7A0'
+            ],
+            randomColorsGradient2:[
+            '#007BCE',
+            '#02BD50',
+            '#B101FD',
+            '#E38D04',
+            '#F61900',
+            '#44A2E0',
+            '#21E0B9',
+            '#303B47',
+            '#BA4A00'
+            ],
         itemColorsDark:[
           '#0A3D62',
           '#0E6655',
@@ -102,8 +131,21 @@ export default {
      * @param {Boolean} isItem if is true, the color is for the circle and line, if is false, the color is for connectors
      */
     setItemsColor(index,isItem=false){
-      return isItem?`border-top:1em dotted ${this.itemColors[index]}`:`stroke:${this.itemColors[index]}!important`;
+      const color=this.itemColors[index>=this.itemColors.length?Math.floor(Math.random() * this.itemColors.length):index];
+      return isItem?`border-top:1em dotted 
+      ${color}`:`stroke:${color}!important`;
     },
+    setGradientColors(index){
+      const colorlight=this.randomColorsGradient1[index>=this.randomColorsGradient1.length?Math.floor(Math.random() * this.randomColorsGradient1.length):index];
+      const colorNormal=this.itemColors[index>=this.itemColors.length?Math.floor(Math.random() * this.itemColors.length):index];
+      const colorDark=this.randomColorsGradient2[index>=this.randomColorsGradient2.length?Math.floor(Math.random() * this.randomColorsGradient2.length):index];
+      const style=`-webkit-linear-gradient(90deg, ${colorlight} 5%, ${colorNormal} 53%,${
+        colorDark} 91%)`
+      console.log(index,style,'owo')
+      return  style;
+       
+    },
+    
     openItemInformation(index){
       const itemCircle=document.querySelector(`#ci-border${index}`);
       const timelineInfoConnector=document.querySelector(`#infoconnector-${index}`);
@@ -190,7 +232,8 @@ export default {
         eventName.setAttribute('style','font-weight:400');
       }
     }
-  },
+  ,
+},
   mounted() {
         this.lines = document.querySelectorAll('.line');
         const linesBorder=document.querySelectorAll('line');
@@ -231,8 +274,9 @@ export default {
           })
         }
         ,2000)
-    },
     
+      
+    }
 };
 </script>
 <style scoped>
@@ -284,14 +328,12 @@ export default {
 }
 
 .timelineinfo {
-  width: 40%;
+  width: auto;
+  padding: 0 2em!important;
   margin-top: 1.5em;
-  font-size: 22px;
-  font-family: 'Courier new', courier, monospace;
-  font-weight: 700;
-  background: -webkit-linear-gradient(-86deg, #98FF9C 5%, #3ACE53 53%, #00B141 91%);
-  -webkit-background-clip: text!important;
-  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  
   
 }
 @media (max-width: 1580px) {
