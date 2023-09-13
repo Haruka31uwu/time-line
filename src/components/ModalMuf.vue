@@ -197,7 +197,6 @@ export default{
     mounted() {
         const actualPage=document.querySelector(`.page-${this.page}`);
         actualPage.style.display="flex";
-        console.log(this.mofData);
     },
 }
 </script>

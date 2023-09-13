@@ -25,7 +25,7 @@
             :stage="item"
             :is-end="index==timelineItems.stages.length-1"
             :index="index+1"
-            @getPostulantData="(data) => getEmployeeData(data)"
+            @getPostulantData="(data) => getPostulantData(data)"
             />
 
         </div>
@@ -274,8 +274,8 @@ export default {
     }
 },
 methods: {
-    getEmployeeData(data){
-      this.$emit('getEmployeeData',data)
+  getPostulantData(data){
+      this.$emit('getPostulantData',data)
     },
       openInfoMuf(){
         this.showInfoMuf=true
@@ -297,7 +297,6 @@ methods: {
       },
       autocompleteName(e){
         this.inputText=e.target.textContent
-        console.log(e.target.value)
       }
     },
 watch:{

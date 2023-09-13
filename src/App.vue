@@ -1,12 +1,12 @@
 <template>
   <div id="app">
   <time-line />
-
+    
   </div>
 </template>
 
 <script>
-import TimeLine from './components/TimeLine.vue'
+import TimeLine from './components/TimeLineIndividual.vue'
 export default {
   name: 'App',
   components: {

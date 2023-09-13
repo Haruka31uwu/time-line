@@ -94,7 +94,6 @@ export default {
   methods: {
     async getPostulantData(idCandidate){
       this.$emit('getPostulantData',idCandidate);
-      console.log(idCandidate)
     },
     /**
      * Set Circle, Line and Connectors Color
@@ -194,7 +193,6 @@ export default {
   },
   mounted() {
         this.lines = document.querySelectorAll('.line');
-        
         const linesBorder=document.querySelectorAll('line');
         setTimeout(() => {
             this.lines.forEach((line) => {
@@ -472,7 +470,6 @@ export default {
   opacity: 0!important;
 }
 h3 {
-font-family: 'Courier New', Courier, monospace;
   font-size: 20px;
   background: -webkit-linear-gradient(-91deg, #94A6DC 5%, #68A0EF 53%, #0A49AE 91%);
   -webkit-background-clip: text!important;
