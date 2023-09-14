@@ -112,6 +112,9 @@ export default {
         TimeLineIndividualItem,
         TimelineTitle
     },
+    mounted(){
+        console.log(this.wrapperCords)
+    },
     methods:{
         /**
          * @description: Cierra el componente de la linea de tiempo individual

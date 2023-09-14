@@ -492,7 +492,7 @@ export default {
 }.welcome-component{
   position:absolute;
   top:10%;
-  left:22%;
+  left:16%;
   display:none;
   z-index:3;
 

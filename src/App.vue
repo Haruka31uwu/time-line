@@ -1,6 +1,7 @@
 <template>
   <div id="app">
   <time-line 
+  :wrapper-cords="wrapperCords"
 />
     
   </div>
@@ -14,7 +15,14 @@ export default {
     TimeLine
     
   },
-
+  data(){
+    return{
+      wrapperCords:{
+        top:0,
+        left:0
+      }
+    }
+  },
 }
 </script>
 

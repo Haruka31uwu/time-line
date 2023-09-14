@@ -1,6 +1,6 @@
 <template>
     <div class="main-container">
-    <div class="container">
+      <div class="container">
     <svg viewBox="0 0 1260 300">
     <symbol id="s-text">
       <text text-anchor="middle" x="50%" y="80%">{{ title }}</text>
@@ -14,8 +14,8 @@
       <use xlink:href="#s-text" class="text-copy"></use>
     </g>
   </svg>
-</div>
-<div id="wrapper">
+      </div>
+      <div id="wrapper">
     <div id="container2">
         <h1>{{title2}}</h1>
 
@@ -52,9 +52,11 @@ export default{
         }
     },
     mounted(){
-       const wrapper = document.querySelector('#wrapper');
-       wrapper.style.top = this.wrapperCords.top+'px!important';
-       wrapper.style.left = this.wrapperCords.left+'px!important';
+      console.log(this.wrapperCords)
+       const container2 = document.querySelector('#container2');
+       console.log(container2)
+       container2.style.top = this.wrapperCords.top+'px';
+       container2.style.left = this.wrapperCords.left+'px';
        const nthChild1= document.querySelector('.text-copy:nth-child(1)');
         const nthChild2= document.querySelector('.text-copy:nth-child(2)');
         const nthChild3= document.querySelector('.text-copy:nth-child(3)');
@@ -156,7 +158,6 @@ body {
     position: absolute;
     left: 45em;
     max-width: 80em;
-    top: 3.5em;
     cursor:pointer;
 
 }
@@ -169,6 +170,7 @@ body {
     align-items: flex-end;
     width: 100%;
     background: white;
+    position: relative!important;;
 }
 
 #wrapper:hover {
