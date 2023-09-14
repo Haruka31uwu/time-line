@@ -1,6 +1,7 @@
 <template>
     <div class="timeline-individual">
-        <timeline-title :title="'TimeLine From'" :title2="postulantName" :wrapper-cords="wrapperCords"/>
+        <timeline-title :title="'TimeLine From'" :title2="postulantName" 
+        :wrapper-cords="wrapperCords" :nth-child-colors="nthChildColors"/>
         <div class="back-icon" @click="closeIndividualTimeline(0)" >
             <img width="30" heigth="30" :src="backUrl" alt="back-icon"/>
         </div>
@@ -96,6 +97,15 @@ export default {
         type:String,
         default:require('@/assets/info.svg')
       },
+      nthChildColors:{
+          type:Array,
+          default:()=>[
+            '#4D163D',
+            '#840037',
+            '#BD0034',
+
+          ]
+        }
       
     },
     components:{

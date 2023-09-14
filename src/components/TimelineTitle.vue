@@ -40,12 +40,28 @@ export default{
                 top:0,
                 left:0
             })
+        },
+        nthChildColors:{
+          type:Array,
+          default:()=>[
+            '#4D163D',
+            '#840037',
+            '#BD0034',
+
+          ]
         }
     },
     mounted(){
        const wrapper = document.querySelector('#wrapper');
-       wrapper.style.top = this.wrapperCords.top+'px';
-       wrapper.style.left = this.wrapperCords.left+'px';
+       wrapper.style.top = this.wrapperCords.top+'px!important';
+       wrapper.style.left = this.wrapperCords.left+'px!important';
+       const nthChild1= document.querySelector('.text-copy:nth-child(1)');
+        const nthChild2= document.querySelector('.text-copy:nth-child(2)');
+        const nthChild3= document.querySelector('.text-copy:nth-child(3)');
+        nthChild1.style.stroke = this.nthChildColors[0];
+        nthChild2.style.stroke = this.nthChildColors[1];
+        nthChild3.style.stroke = this.nthChildColors[2];
+
     }
 }
 </script>
