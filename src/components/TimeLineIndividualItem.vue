@@ -121,7 +121,7 @@
           </linearGradient>
       </g>
     </svg>
-    <flag-component class="flag" style="display:none"/>
+    <flag-component class="flag" :flag-url="flagUrl"/>
     <span v-for="(stg,index4) in stage" 
     :key="`event-item-${index4}`" 
     class="event-item-stg"
@@ -173,7 +173,22 @@ export default {
           x:190,
           y:50
         })
-      }
+      },
+      flagPosition:{
+        type:Object,
+        default:()=>({
+          x:320,
+          y:270
+        })
+      },
+      flagUrl:{
+        type:String,
+        default:`require(@/assets/flag-animation.png)`
+      },
+      backUrl:{
+        type:String,
+        default:require('@/assets/info.svg')
+      },
       
     },
     components:{
@@ -265,7 +280,18 @@ export default {
         if(this.stage.findIndex((item)=>item.applicant_status_id==this.welcomeStatus)!=-1){
           this.showWelcome()
         }
-       
+       setTimeout(()=>{
+        this.setFlagPosition();
+       },this.timeBetweenPaths*700*this.stage.length*1.2)
+      },
+      setFlagPosition(){
+        const paths= document.querySelectorAll('.path-track-rect');
+        const lastPath= paths[paths.length-1];
+        const flag= document.querySelector('.flag');
+        flag.style.position="absolute";
+        flag.style.left=lastPath.getBoundingClientRect().x+this.flagPosition.x+'px';
+        flag.style.top=lastPath.getBoundingClientRect().y-this.flagPosition.y+'px';
+
       },
       showWelcome(){
         setTimeout(()=>{
@@ -405,16 +431,7 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: auto;
     z-index: 2;
-}.flag{
-    position: absolute;
-    top:320px;
-    right:-50px;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
 }
 
 @keyframes dash2 {
@@ -485,12 +502,12 @@ export default {
   display: none !important;;
 }.backdrop{
   opacity:0;
-  width:100vw;
+  width:100%;
   height:100%;
   background:rgba(0,0,0,0.8);
   position:absolute;
   top:0;
-  z-index:1;
+  z-index:-1;
   transition: 0.5s ease-in-out;
 }
 

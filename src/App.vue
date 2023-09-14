@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-  <time-line />
+  <time-line 
+/>
     
   </div>
 </template>
@@ -12,7 +13,8 @@ export default {
   components: {
     TimeLine
     
-  }
+  },
+
 }
 </script>
 

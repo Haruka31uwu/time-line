@@ -14,7 +14,9 @@
               </div> 
               
               </div>-->
-             
+              <div class="timeline-styles back-icon" @click="closeGlobalTimeline(0)" >
+                <img :src="imgsSrc.back" alt="logo" width="32" height="32"/>
+              </div> 
               <div class="timeline-styles info-icon" @click="openInfoMuf">
                 <img :src="imgsSrc.info" alt="logo" width="32" height="32"/>
               </div> 
@@ -25,7 +27,7 @@
             :stage="item"
             :is-end="index==timelineItems.stages.length-1"
             :index="index+1"
-            @getPostulantData="(data) => getPostulantData(data)"
+            @getPostulantData="(data,name) => getPostulantData(data,name)"
             />
 
         </div>
@@ -261,7 +263,8 @@ export default {
                 facebook:require('@/assets/facebook.png'),
                 indeed:require('@/assets/indeed.png'),
                 logo:require('@/assets/amg.svg'),
-                info:require('@/assets/info.svg')
+                info:require('@/assets/info.svg'),
+                back:require('@/assets/info.svg')
           })
         },
         background:{
@@ -303,8 +306,8 @@ export default {
     }
 },
 methods: {
-  getPostulantData(data){
-      this.$emit('getPostulantData',data)
+  getPostulantData(data,name){
+      this.$emit('getPostulantData',data,name)
     },
       openInfoMuf(){
         this.showInfoMuf=true
@@ -326,24 +329,26 @@ methods: {
       },
       autocompleteName(e){
         this.inputText=e.target.textContent
-        console.log(e.target.value)
+      },
+      closeGlobalTimeline(global){
+        this.$emit('closeGlobalTimeline',global)
       }
     },
     mounted(){
       const timeline=document.querySelector('.background')
       timeline.style.backgroundImage=`url(${this.background.url})`
     },
-watch:{
-  inputText(oldValue){
-    if(oldValue.length>0){
-      this.filteredOptions=this.suggestOptions.filter((option)=>{
-        return option.name.toLowerCase().includes(oldValue.toLowerCase())
-      })
-    }else{
-      this.filteredOptions=[]
-    } 
-}
-}
+    watch:{
+      inputText(oldValue){
+        if(oldValue.length>0){
+          this.filteredOptions=this.suggestOptions.filter((option)=>{
+            return option.name.toLowerCase().includes(oldValue.toLowerCase())
+          })
+        }else{
+          this.filteredOptions=[]
+        } 
+    }
+    }
 }
 </script>
 <style scoped>
@@ -476,6 +481,8 @@ cursor: pointer;
   border-radius: 0.5em;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}.back-icon{
+  border-radius: 1em;
 }
 </style>
 

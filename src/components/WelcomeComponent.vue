@@ -1,8 +1,17 @@
 <template>
+    <div class="container">
     <h1><span v-for="(item,index) in 'Congratulations!!!'" :key="index">{{ item }}</span></h1>
+    <div class="confettis">
+    <confetti-component v-for="(item,index) in 2" :key="`confetti-${index+1}`" :index="index+1" />
+    </div>
+    </div>
 </template>
 <script>
+import ConfettiComponent from './ConfettiComponent.vue';
 export default{
+    components:{
+        ConfettiComponent
+    },
     mounted(){
         this.bounce();
     },
@@ -64,5 +73,12 @@ h1 span:nth-child(16){ animation-delay:.70s;}
 h1 span:nth-child(17){ animation-delay:.70s;}
 h1 span:nth-child(18){ animation-delay:.70s;}
 
-
+.container{
+    position: relative;
+}.confettis{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+}
 </style>

@@ -33,7 +33,19 @@ export default{
         title2:{
             type:String,
             default:''
+        },
+        wrapperCords:{
+            type:Object,
+            default:()=>({
+                top:0,
+                left:0
+            })
         }
+    },
+    mounted(){
+       const wrapper = document.querySelector('#wrapper');
+       wrapper.style.top = this.wrapperCords.top+'px';
+       wrapper.style.left = this.wrapperCords.left+'px';
     }
 }
 </script>
@@ -59,6 +71,7 @@ body{
   align-items: center;
   background: white;
   width: 40%;
+  margin:0;
 }
 
 svg {

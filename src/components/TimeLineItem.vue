@@ -33,7 +33,7 @@
     </div>
 
   <div :id="`cc-${index}`" class="candidates-container opacity-0" v-if="stage.candidates.length>0" >
-    <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate" @click="getPostulantData(candidate.idCandidate)">
+    <div class="candidate" v-for="candidate in stage.candidates" :key="candidate.idCandidate" @click="getPostulantData(candidate.idCandidate,candidate.name)">
       <span>{{candidate.name}}</span>
     </div>
   </div>
@@ -121,8 +121,8 @@ export default {
     };
   },
   methods: {
-    async getPostulantData(idCandidate){
-      this.$emit('getPostulantData',idCandidate);
+    async getPostulantData(idCandidate,name){
+      this.$emit('getPostulantData',idCandidate,name);
     },
     /**
      * Set Circle, Line and Connectors Color
@@ -141,7 +141,6 @@ export default {
       const colorDark=this.randomColorsGradient2[index>=this.randomColorsGradient2.length?Math.floor(Math.random() * this.randomColorsGradient2.length):index];
       const style=`-webkit-linear-gradient(90deg, ${colorlight} 5%, ${colorNormal} 53%,${
         colorDark} 91%)`
-      console.log(index,style,'owo')
       return  style;
        
     },

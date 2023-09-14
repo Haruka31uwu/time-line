@@ -173,7 +173,6 @@ export default{
         }
     },
     created(){
-        console.log(typeof this.imgsSrc.linkedin);
     },
     methods:{
         getAuthonomyDescription(value){

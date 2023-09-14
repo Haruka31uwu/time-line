@@ -9,8 +9,13 @@
     </div>
 </template>
 <script>
-import flag from '../assets/flag-animation.png'
 export default {
+    props:{
+        flagUrl:{
+            type:String,
+            default:require('@/assets/flag-animation.png')
+        }
+    },
     data(){
         return {
             spriteWidth: 60,
@@ -35,7 +40,7 @@ export default {
             x:0,
             y:0,
             direction: 'right',
-            sprite:flag
+            sprite:this.flagUrl
         }
     },
     mounted(){

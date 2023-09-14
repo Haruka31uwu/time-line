@@ -21,8 +21,7 @@ export default {
     },
     mounted(){
         const text= document.querySelector(`#text-${this.index}`);
-        console.log(text, this.text)
-        console.log(this.gradient)
+
         text.style.background = this.gradient
     },
 }
